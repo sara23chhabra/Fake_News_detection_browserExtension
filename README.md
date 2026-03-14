@@ -14,6 +14,7 @@ A fully free, local-running browser extension (Chrome & Edge compatible) that an
 
 ## System Architecture
 
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Browser Extension                         │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
@@ -40,6 +41,7 @@ A fully free, local-running browser extension (Chrome & Edge compatible) that an
 │  │         Final Score = Source - Penalty + Bonus       │   │
 │  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
+```
 
 ## Installation
 
