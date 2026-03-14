@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+newspaper3k
+transformers
+torch
+feedparser
+requests
+lxml
+beautifulsoup4

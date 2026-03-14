@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credibility Analyzer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Credibility Analyzer</h1>
+      </div>
+    </header>
+
+    <!-- Loading State -->
+    <div id="loading" class="state loading-state">
+      <div class="spinner"></div>
+      <p>Analyzing article...</p>
+      <p class="loading-sub">This may take a moment</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="state error-state hidden">
+      <div class="error-icon">⚠️</div>
+      <p id="error-message">Failed to analyze article</p>
+      <button id="retry-btn" class="btn btn-primary">Try Again</button>
+    </div>
+
+    <!-- Not Article State -->
+    <div id="not-article" class="state not-article-state hidden">
+      <div class="info-icon">📰</div>
+      <p>Navigate to a news article to analyze its credibility.</p>
+    </div>
+
+    <!-- Results State -->
+    <div id="results" class="state results-state hidden">
+      <!-- Score Card -->
+      <div class="score-card">
+        <div class="score-circle" id="score-circle">
+          <span class="score-value" id="score-value">--</span>
+          <span class="score-max">/100</span>
+        </div>
+        <div class="score-label" id="score-label">Analyzing...</div>
+      </div>
+
+      <!-- Article Title -->
+      <div class="article-section">
+        <h3 class="section-title">Article</h3>
+        <p class="article-title" id="article-title">Loading...</p>
+      </div>
+
+      <!-- Summary -->
+      <div class="summary-section">
+        <h3 class="section-title">Summary</h3>
+        <p class="summary-text" id="summary-text">Loading...</p>
+      </div>
+
+      <!-- Score Breakdown -->
+      <div class="breakdown-section">
+        <h3 class="section-title">Score Breakdown</h3>
+        
+        <div class="breakdown-item">
+          <div class="breakdown-header">
+            <span class="breakdown-label">📊 Source Reputation</span>
+            <span class="breakdown-value positive" id="source-score">+0</span>
+          </div>
+          <div class="breakdown-detail" id="source-detail">Unknown source</div>
+        </div>
+
+        <div class="breakdown-item">
+          <div class="breakdown-header">
+            <span class="breakdown-label">⚡ Sensationalism</span>
+            <span class="breakdown-value negative" id="sensationalism-penalty">-0</span>
+          </div>
+          <div class="breakdown-detail" id="sensationalism-detail">No issues detected</div>
+        </div>
+
+        <div class="breakdown-item">
+          <div class="breakdown-header">
+            <span class="breakdown-label">✓ Corroboration</span>
+            <span class="breakdown-value positive" id="corroboration-bonus">+0</span>
+          </div>
+          <div class="breakdown-detail" id="corroboration-detail">No sources checked</div>
+        </div>
+      </div>
+
+      <!-- Explanation -->
+      <div class="explanation-section">
+        <h3 class="section-title">Analysis</h3>
+        <p class="explanation-text" id="explanation-text">Loading analysis...</p>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="disclaimer">
+        <p>⚠️ This tool estimates credibility based on journalistic indicators. It does not perform absolute fact verification.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

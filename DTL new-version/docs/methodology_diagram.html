@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credibility Analyzer - Methodology Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #334155;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 AI-Based Fake News Credibility Analyzer</h1>
+        <h2>System Architecture Overview</h2>
+
+        <div class="mermaid">
+            flowchart TB
+            subgraph USER["👤 User"]
+            A["Opens News Article"]
+            end
+
+            subgraph EXT["🌐 Browser Extension"]
+            B["Click Extension Icon"]
+            C["Extract Page URL"]
+            D["Send to Backend"]
+            E["Display Results"]
+            end
+
+            subgraph API["⚙️ FastAPI Backend"]
+            F["/analyze Endpoint"]
+            end
+
+            subgraph EXTRACT["📄 Extraction"]
+            G["newspaper3k"]
+            G1["Title"]
+            G2["Text"]
+            G3["Metadata"]
+            end
+
+            subgraph SUMMARIZE["🤖 Summarization"]
+            H["HuggingFace"]
+            H1["BART-Large-CNN"]
+            H2["2-4 Sentences"]
+            end
+
+            subgraph CREDIBILITY["📊 Credibility Analysis"]
+            I["Source Score (0-100)"]
+            J["Sensationalism (-0 to -30)"]
+            K["Corroboration (+0 to +15)"]
+            end
+
+            subgraph SCORE["🎯 Final Score"]
+            L["Score = Source - Penalty + Bonus"]
+            M1["🟢 High: 75-100"]
+            M2["🟡 Medium: 50-74"]
+            M3["🔴 Low: 0-49"]
+            end
+
+            A --> B --> C --> D --> F
+            F --> G --> G1 & G2 & G3
+            G1 & G2 --> H --> H1 --> H2
+            G2 --> I & J & K
+            H2 --> K
+            I & J & K --> L --> M1 & M2 & M3
+            M1 & M2 & M3 --> E
+        </div>
+
+        <h2>Credibility Scoring Formula</h2>
+
+        <div class="mermaid">
+            flowchart LR
+            subgraph INPUTS["Score Components"]
+            S["Source Score<br />0-100 points"]
+            P["Sensationalism Penalty<br />0-30 points"]
+            B["Corroboration Bonus<br />0-15 points"]
+            end
+
+            subgraph FORMULA["Calculation"]
+            F["Final = Source - Penalty + Bonus"]
+            end
+
+            subgraph LABELS["Credibility Labels"]
+            L1["🟢 HIGH ≥75"]
+            L2["🟡 MEDIUM 50-74"]
+            L3["🔴 LOW <50"] end S --> F
+                P --> F
+                B --> F
+                F --> L1 & L2 & L3
+        </div>
+
+        <h2>Cross-Source Corroboration</h2>
+
+        <div class="mermaid">
+            flowchart TB
+            A["Article Title + Summary"] --> B["Extract Keywords"]
+            B --> C["Remove Stop Words"]
+            C --> D["Search 12 RSS Feeds"]
+
+            subgraph FEEDS["Trusted Sources"]
+            F1["BBC"]
+            F2["Reuters"]
+            F3["Guardian"]
+            F4["The Hindu"]
+            F5["NDTV"]
+            F6["CNN + more..."]
+            end
+
+            D --> FEEDS
+            FEEDS --> G["Calculate Similarity"]
+            G --> H{"Match ≥15%?"}
+            H -->|Yes| I["Count Source"]
+            H -->|No| J["Skip"]
+
+            I --> K{"Total Matches"}
+            K -->|"≥3"| L["+15 points"]
+            K -->|"1-2"| M["+5 points"]
+            K -->|"0"| N["0 points"]
+        </div>
+
+        <h2>Sensationalism Detection</h2>
+
+        <div class="mermaid">
+            flowchart TB
+            A["Article Title"] --> B["Analyze Content"]
+
+            B --> C["Clickbait Phrases"]
+            C --> C1["'You won't believe...'<br />-3 each, max -12"]
+
+            B --> D["Sensational Words"]
+            D --> D1["'SHOCKING', 'BOMBSHELL'<br />-2 each, max -10"]
+
+            B --> E["Caps Abuse"]
+            E --> E1[">50% UPPERCASE<br />-3 to -5"]
+
+            B --> F["Punctuation"]
+            F --> F1["!! or ??<br />-1 to -3"]
+
+            C1 & D1 & E1 & F1 --> G["Total Penalty<br />max -30 points"]
+        </div>
+
+        <div class="note">
+            <strong>📝 Note:</strong> To save these diagrams as images, right-click on any diagram and select "Save
+            image as..." or use your browser's screenshot tool (Windows: Win+Shift+S).
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+
+</html>
